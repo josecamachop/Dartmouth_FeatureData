@@ -1,0 +1,62 @@
+%% Dartmouth feature data
+% Not for share
+%
+% coded by: Jose Camacho (josecamacho@ugr.es)
+% last modification: 05/Jun/2023
+%
+% Copyright (C) 2023  University of Granada, Granada
+% 
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+%% Data
+%
+% train:
+%
+% x: [2548 x 92] feature data
+% xlog_2cent: [2548 x 92] log transformed feature data, double centered
+% obs_l: [1 x 2548] observation label (timestamp)
+% var_l: [1 x 92] feature label
+% classy: [2548 x 4] classes for the observations: year, trimester, week, workday/weekend. 
+
+clc
+clear
+load matlab/DartmouthFeature
+
+% Write to excel
+filename = 'excel/dartmouthFeature.xlsx';
+Tx = array2table(x,'RowNames',obs_l,'VariableNames',var_l);
+writetable(Tx,filename,'WriteRowNames',true,'Sheet','X','Range','A1','FileType','spreadsheet');
+
+Ty = array2table(Y,'RowNames',obs_l,'VariableNames',yvar_l);
+writetable(Ty,filename,'WriteRowNames',true,'Sheet','Xlog_2cent','Range','A1','FileType','spreadsheet');
+
+Txt = array2table(test,'RowNames',obs_lt,'VariableNames',var_l);
+writetable(Txt,filename,'WriteRowNames',true,'Sheet','Test X','Range','A1','FileType','spreadsheet');
+
+Tyt = array2table(Yt,'RowNames',obs_lt,'VariableNames',yvar_l);
+writetable(Tyt,filename,'WriteRowNames',true,'Sheet','Test Y','Range','A1','FileType','spreadsheet');
+
+% Write to csv
+filename = 'csv/UGR16v1.Xtrain.csv';
+writetable(Tx,filename,'WriteRowNames',true,'FileType','text');
+
+filename = 'csv/UGR16v1.Ytrain.csv';
+writetable(Ty,filename,'WriteRowNames',true,'FileType','text');
+
+filename = 'csv/UGR16v1.Xtest.csv';
+writetable(Txt,filename,'WriteRowNames',true,'FileType','text');
+
+filename = 'csv/UGR16v1.Ytest.csv';
+writetable(Tyt,filename,'WriteRowNames',true,'FileType','text');
+
